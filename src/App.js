@@ -2,6 +2,8 @@ import './App.css';
 import React from 'react';
 import Expenses from './components/Expenses/Expenses';
 import NewExpense from './components/NewExpense/NewExpense';
+import { useState } from 'react';
+import { useEffect } from 'react';
 
 function App() {
   const expenses = [
@@ -28,8 +30,10 @@ function App() {
       title: 'New Desk (Wooden)',
       amount: 450,
       date: new Date(2021, 5, 12),
-    },
+    }
   ];
+
+  const [expensesState, setExpensesState] = useState(expenses);
 
   // return React.createElement(
   //   'div',
@@ -38,11 +42,18 @@ function App() {
   //   React.createElement(Expenses,{items:expenses})
   // )
 
+  const addExpenseHandler = (expense) => {
+    setExpensesState([...expensesState, expense])
+  }
+
+  useEffect(() => {
+    console.log(expensesState)
+  }, [expensesState])
 
   return (
     <div className="App">
-      <NewExpense />
-      <Expenses items={expenses} />
+      <NewExpense onAddExpense={addExpenseHandler} />
+      <Expenses items={expensesState} />
     </div>
   );
 }
