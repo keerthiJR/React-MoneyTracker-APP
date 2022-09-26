@@ -5,11 +5,11 @@ const ExpensesList = (props) => {
         return <h2 className="expenses-list__fallback">Found no expenses.</h2>
     }
     return (
-        <ul className="expenses-list">
+        <div className="expenses-list">
             {props.items.map(item => {
                 return <ExpenseItem title={item.title} date={item.date} amount={item.amount} key={item.id} />
             })}
-        </ul>
+        </div>
     );
 }
 

@@ -3,6 +3,7 @@ import React from 'react';
 import Expenses from './components/Expenses/Expenses';
 import NewExpense from './components/NewExpense/NewExpense';
 import { useState } from 'react';
+import background from "./ironman.jpg";
 import { useEffect } from 'react';
 
 const DUMMY_EXPENSES = [
@@ -54,9 +55,11 @@ function App() {
   }, [expenses])
 
   return (
-    <div className="App">
+    <div className='container' style={{backgroundImage:  `url(${background})`}}>
+      <div style={{width:"40%"}}>
       <NewExpense onAddExpense={addExpenseHandler} />
       <Expenses items={expenses} />
+      </div>
     </div>
   );
 }
