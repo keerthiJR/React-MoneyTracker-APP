@@ -6,35 +6,57 @@ import { useState } from "react";
 import ExpensesList from "./ExpensesList";
 const Expenses = (props) => {
 
-    const [filteredYear, setFilteredYear] = useState('2021');
-    const filterChangeHandler = (selectedYear) => {
-        console.log(selectedYear)
+    const [filteredYear, setFilteredYear] = useState('ALL');
+    const [filteredMonth, setFilteredMonth] = useState('ALL');
+
+    const filterChangeHandlerYear = (selectedYear) => {
+        // console.log(selectedYear)
         setFilteredYear(selectedYear);
     }
 
-    let filterExpenses;
+    const filterChangeHandlerMonth = (selectedMonth) => {
+        // console.log(selectedMonth)
+        setFilteredMonth(selectedMonth);
+    }
+    const filterApplyHandler = (allExpenses) => {
+            setFilteredYear(allExpenses);
+            setFilteredMonth(allExpenses);
+    }
+
+    let filterExpensesYear;
 
     if (filteredYear === 'ALL') {
-        filterExpenses = props.items
+        filterExpensesYear = props.items
     } else {
-        filterExpenses = props.items.filter(expense => {
+        filterExpensesYear = props.items.filter(expense => {
             return expense.date.getFullYear().toString() === filteredYear;
         })
     }
 
-    const sortExpenses = filterExpenses.sort((a, b) => a.date.getTime() - b.date.getTime());
+    let filterExpensesMonth;
 
+    if (filteredMonth === 'ALL') {
+        filterExpensesMonth = props.items
+    } else {
+        filterExpensesMonth = filterExpensesYear.filter(expense => {
+            return expense.date.toLocaleString('en-US', { month: 'long' }) === filteredMonth;
+        })
+    }
+
+    const sortExpensesYear = filterExpensesMonth.sort((a, b) => a.date.getTime() - b.date.getTime());
+
+    console.log(sortExpensesYear)
 
     return (
         <div>
             <Card className="expenses">
-                <ExpensesFilter selected={filteredYear} onChangeFilter={filterChangeHandler} />
-                <div style={{ display: "flex", justifyContent: "space-evenly"}}>
+                <ExpensesFilter onChangeFilterYear={filterChangeHandlerYear} onChangeFilterMonth={filterChangeHandlerMonth} onApplyFilter={filterApplyHandler} />
+                <div style={{ display: "flex", justifyContent: "space-evenly" }}>
                     <div>
-                        <ExpensesChart expenses={sortExpenses} />
+                        <ExpensesChart expenses={sortExpensesYear} />
                     </div>
                     <div style={{ maxHeight: "400px", overflowY: "auto" }}>
-                        <ExpensesList items={sortExpenses} />
+                        <ExpensesList items={sortExpensesYear} />
                     </div>
                 </div>
             </Card>

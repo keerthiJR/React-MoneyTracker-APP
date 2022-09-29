@@ -44,7 +44,7 @@ function App() {
   }
 
   useEffect(() => {
-    console.log(expenses)
+    // console.log(expenses)
   }, [expenses])
 
   return (
