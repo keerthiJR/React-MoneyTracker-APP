@@ -6,9 +6,8 @@
   max-width: 95%;
   border-radius: 12px;
   text-align: center;
-  -webkit-box-shadow: -19px 0px 19px 27px rgba(0,0,0,0.9);
--moz-box-shadow: -19px 0px 19px 27px rgba(0,0,0,0.9);
-box-shadow: -19px 0px 19px 27px rgba(0,0,0,0.9);}
+  box-shadow: 0 0px 30px rgb(255, 254, 254);
+}
 
 .new-expense button {
   font: inherit;

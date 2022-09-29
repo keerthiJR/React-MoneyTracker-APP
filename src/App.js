@@ -11,7 +11,7 @@ const DUMMY_EXPENSES = [
     id: 'e1',
     title: "Toilet Paper",
     amount: 94.12,
-    date: new Date(2020, 7, 14),
+    date: new Date(2020, 11, 14),
   },
   {
     id: 'e2',
@@ -49,10 +49,8 @@ function App() {
 
   return (
     <div className='container' style={{ backgroundImage: `url(${background})` }}>
-      <div style={{ width: "45%", Height: "40px" }}>
         <NewExpense onAddExpense={addExpenseHandler} />
         <Expenses items={expenses} />
-      </div>
     </div>
   );
 }

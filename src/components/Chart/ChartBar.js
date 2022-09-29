@@ -1,8 +1,8 @@
-import React from 'react';
-
+import React, { useState } from 'react';
 import './ChartBar.css';
 
 const ChartBar = (props) => {
+  const [hover, setHover] = useState(false);
   let barFillHeight = '0%';
 
   if (props.maxValue > 0) {
@@ -15,7 +15,9 @@ const ChartBar = (props) => {
         <div
           className='chart-bar__fill'
           style={{ height: barFillHeight }}
-        ></div>
+          onMouseOver={() => { setHover(true) }}
+          onMouseLeave={() => { setHover(false) }}
+        >{hover ? props.value : null}</div>
       </div>
       <div className='chart-bar__label'>{props.label}</div>
     </div>
