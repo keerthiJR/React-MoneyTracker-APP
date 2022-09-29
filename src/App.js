@@ -49,7 +49,7 @@ function App() {
 
   return (
     <div className='container' style={{ backgroundImage: `url(${background})` }}>
-      <div style={{ width: "40%" }}>
+      <div style={{ width: "45%", Height: "40px" }}>
         <NewExpense onAddExpense={addExpenseHandler} />
         <Expenses items={expenses} />
       </div>
