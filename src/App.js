@@ -37,15 +37,8 @@ function App() {
 
   const [expenses, setExpenses] = useState(DUMMY_EXPENSES);
 
-  // return React.createElement(
-  //   'div',
-  //   {},
-  //   React.createElement('h2',{},"Lets's get Started!"),
-  //   React.createElement(Expenses,{items:expenses})
-  // )
-
   const addExpenseHandler = (expense) => {
-    setExpenses(prevExpenses =>{
+    setExpenses(prevExpenses => {
       return [expense, ...prevExpenses]
     })
   }
@@ -55,10 +48,10 @@ function App() {
   }, [expenses])
 
   return (
-    <div className='container' style={{backgroundImage:  `url(${background})`}}>
-      <div style={{width:"40%"}}>
-      <NewExpense onAddExpense={addExpenseHandler} />
-      <Expenses items={expenses} />
+    <div className='container' style={{ backgroundImage: `url(${background})` }}>
+      <div style={{ width: "40%" }}>
+        <NewExpense onAddExpense={addExpenseHandler} />
+        <Expenses items={expenses} />
       </div>
     </div>
   );
