@@ -49,7 +49,7 @@ const ExpenseForm = (props) => {
                 </div>
                 <div className='new-expense__control'>
                     <label>Amount</label>
-                    <input type='number' min='0.01' step='0.01' max="999999" onChange={amountChangeHandler} value={enteredAmount} required />
+                    <input type='number' min='1' step='1' max="999999" onChange={amountChangeHandler} value={enteredAmount} required />
                 </div>
                 <div className='new-expense__control'>
                     <label>Date</label>
