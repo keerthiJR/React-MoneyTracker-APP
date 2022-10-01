@@ -4,7 +4,6 @@ import Expenses from './components/Expenses/Expenses';
 import NewExpense from './components/NewExpense/NewExpense';
 import { useState } from 'react';
 import background from "./ironman.jpg";
-import { useEffect } from 'react';
 
 const DUMMY_EXPENSES = [
   {
@@ -21,15 +20,21 @@ const DUMMY_EXPENSES = [
   },
   {
     id: 'e3',
+    title: 'New Desk (Wooden)',
+    amount: 450,
+    date: new Date(2021, 5, 12),
+  },
+  {
+    id: 'e4',
     title: 'Car Insurance',
     amount: 294,
     date: new Date(2021, 2, 28),
   },
   {
-    id: 'e4',
-    title: 'New Desk (Wooden)',
-    amount: 450,
-    date: new Date(2021, 5, 12),
+    id: 'e5',
+    title: 'Car Insurance',
+    amount: 1,
+    date: new Date(2021, 1, 28),
   }
 ];
 
@@ -42,10 +47,6 @@ function App() {
       return [expense, ...prevExpenses]
     })
   }
-
-  useEffect(() => {
-    // console.log(expenses)
-  }, [expenses])
 
   return (
     <div className='container' style={{ backgroundImage: `url(${background})` }}>

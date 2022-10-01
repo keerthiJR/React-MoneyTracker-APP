@@ -1,3 +1,8 @@
+.expenses-filter-sort {
+  display: flex;
+  justify-content: space-between;
+}
+
 .expenses-filter {
   color: white;
   padding: 0 1rem;
@@ -5,6 +10,19 @@
 }
 
 .expenses-filter__control {
+  display: flex;
+  padding: 0.4rem 0.75rem;
+  flex-direction: column;
+  margin: 0.5rem 0;
+}
+
+.expenses-sort {
+  color: white;
+  padding: 0 1rem;
+  display: flex;
+}
+
+.expenses-sort__control {
   display: flex;
   padding: 0.4rem 0.75rem;
   flex-direction: column;
@@ -21,4 +39,28 @@
   padding: 0.2rem;
   font-weight: bold;
   border-radius: 10px;
+}
+
+.expenses-sort label {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.expenses-sort select {
+  font: inherit;
+  padding: 0.2rem;
+  font-weight: bold;
+  border-radius: 10px;
+}
+
+.expenses-sort__control button {
+  font: inherit;
+  cursor: pointer;
+  padding: 0.75rem 1.5rem;
+  font-weight: bold;
+  border: 1px solid #000000;
+  background-color: #a71c1c;
+  color: #000000;
+  border-radius: 12px;
+  margin-right: 0.5rem;
 }

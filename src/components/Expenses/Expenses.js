@@ -8,23 +8,26 @@ const Expenses = (props) => {
 
     const [filteredYear, setFilteredYear] = useState('ALL');
     const [filteredMonth, setFilteredMonth] = useState('ALL');
+    const [sortPrice, setSortPrice] = useState(false)
 
     const filterChangeHandlerYear = (selectedYear) => {
-        // console.log(selectedYear)
         setFilteredYear(selectedYear);
     }
 
     const filterChangeHandlerMonth = (selectedMonth) => {
-        // console.log(selectedMonth)
         setFilteredMonth(selectedMonth);
     }
     const filterApplyHandlerYear = (allExpenses) => {
-            setFilteredYear(allExpenses);
+        setFilteredYear(allExpenses);
     }
 
     const filterApplyHandlerMonth = (allExpenses) => {
         setFilteredMonth(allExpenses);
-}
+    }
+
+    const sortApplyHandlerPrice = (sort) => {
+        setSortPrice(sort)
+    }
 
     let filterExpensesYear;
 
@@ -46,24 +49,29 @@ const Expenses = (props) => {
         })
     }
 
+
     console.log(filterExpensesYear, filterExpensesMonth)
 
-    const mergeExpensesYearMonth = filterExpensesYear.filter(o => filterExpensesMonth.some(({id}) => o.id === id));
+    // const mergeExpensesYearMonth = filterExpensesYear.filter(o => filterExpensesMonth.some(({ id }) => o.id === id));
 
-    const sortExpensesYearMonth = mergeExpensesYearMonth.sort((a, b) => a.date.getTime() - b.date.getTime())
+    const sortExpensesYearMonth = filterExpensesYear.filter(o => filterExpensesMonth.some(({ id }) => o.id === id))
+        .sort((a, b) => a.date.getTime() - b.date.getTime())
 
-    console.log(sortExpensesYearMonth)
+    const sortExpensesPrice = filterExpensesYear.filter(o => filterExpensesMonth.some(({ id }) => o.id === id))
+        .sort((a, b) => a.amount - b.amount)
+
+    console.log(sortExpensesYearMonth, sortExpensesPrice)
 
     return (
         <div>
             <Card className="expenses">
-                <ExpensesFilter onChangeFilterYear={filterChangeHandlerYear} onChangeFilterMonth={filterChangeHandlerMonth} onApplyFilterYear={filterApplyHandlerYear} onApplyFilterMonth={filterApplyHandlerMonth} />
+                <ExpensesFilter onChangeFilterYear={filterChangeHandlerYear} onChangeFilterMonth={filterChangeHandlerMonth} onApplyFilterYear={filterApplyHandlerYear} onApplyFilterMonth={filterApplyHandlerMonth} onApplysortPrice={sortApplyHandlerPrice} />
                 <div style={{ display: "flex", justifyContent: "space-evenly" }}>
                     <div>
-                        <ExpensesChart expenses={sortExpensesYearMonth} />
+                        <ExpensesChart expenses={sortPrice ? sortExpensesPrice : sortExpensesYearMonth} />
                     </div>
                     <div style={{ maxHeight: "400px", overflowY: "auto" }}>
-                        <ExpensesList items={sortExpensesYearMonth} />
+                        <ExpensesList items={sortPrice ? sortExpensesPrice : sortExpensesYearMonth} />
                     </div>
                 </div>
             </Card>

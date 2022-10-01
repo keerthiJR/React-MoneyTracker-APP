@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 
@@ -7,10 +7,11 @@ import './ExpensesFilter.css';
 const ExpensesFilter = (props) => {
   const [filterVisibleYear, setFilterVisibleYear] = useState(false)
   const [filterVisibleMonth, setFilterVisibleMonth] = useState(false)
+  const [bgColorSortButton, setBgColorSortButton] = useState(true);
 
   const filterVisibleHandlerYear = () => {
     setFilterVisibleYear(!filterVisibleYear)
-    
+
   }
   const filterVisibleHandlerMonth = () => {
     setFilterVisibleMonth(!filterVisibleMonth)
@@ -23,18 +24,26 @@ const ExpensesFilter = (props) => {
     props.onChangeFilterMonth(event.target.value)
   };
 
-  useEffect(()=>{
+  const sortPriceHandler = useCallback(() => {
+    setBgColorSortButton(!bgColorSortButton)
+    console.log(bgColorSortButton)
+    props.onApplysortPrice(bgColorSortButton)
+  },[bgColorSortButton])
+
+
+  useEffect(() => {
     if (filterVisibleYear === false) {
       props.onApplyFilterYear('ALL')
     }
     if (filterVisibleMonth === false) {
       props.onApplyFilterMonth('ALL')
     }
-  },[filterVisibleYear, filterVisibleMonth])
+  }, [filterVisibleYear, filterVisibleMonth])
+
 
 
   return (
-    <div className='expenses-filter'>
+    <div className='expenses-filter-sort'>
       <div className='expenses-filter'>
         <div className='expenses-filter__control'>
           <label><input type="checkbox" onClick={filterVisibleHandlerYear} />
@@ -67,6 +76,11 @@ const ExpensesFilter = (props) => {
             <option value='November'>November</option>
             <option value='December'>December</option>
           </select>}
+        </div>
+      </div>
+      <div className='expenses-sort'>
+        <div className='expenses-sort__control'>
+          <button onClick={sortPriceHandler} style={{ backgroundColor: bgColorSortButton ? "#ffffff" : "#a71c1c" }}>Price Ascending (A-Z)</button>
         </div>
       </div>
     </div>
