@@ -1,16 +1,19 @@
 import React from 'react';
+import { useEffect } from 'react';
 import { useState } from 'react';
 
 import './ExpensesFilter.css';
 
 const ExpensesFilter = (props) => {
-  const [filterVisible, setFilterVisible] = useState(false)
+  const [filterVisibleYear, setFilterVisibleYear] = useState(false)
+  const [filterVisibleMonth, setFilterVisibleMonth] = useState(false)
 
-  const filterVisibleHandler = () => {
-    setFilterVisible(!filterVisible)
-    if(filterVisible === false){
-      props.onApplyFilter('ALL')
-    }
+  const filterVisibleHandlerYear = () => {
+    setFilterVisibleYear(!filterVisibleYear)
+    
+  }
+  const filterVisibleHandlerMonth = () => {
+    setFilterVisibleMonth(!filterVisibleMonth)
   }
   const dropdownChangeHandlerYear = (event) => {
     props.onChangeFilterYear(event.target.value)
@@ -20,31 +23,36 @@ const ExpensesFilter = (props) => {
     props.onChangeFilterMonth(event.target.value)
   };
 
+  useEffect(()=>{
+    if (filterVisibleYear === false) {
+      props.onApplyFilterYear('ALL')
+    }
+    if (filterVisibleMonth === false) {
+      props.onApplyFilterMonth('ALL')
+    }
+  },[filterVisibleYear, filterVisibleMonth])
+
 
   return (
     <div className='expenses-filter'>
-      <div className='checkBox__Filter' style={{ fontColor: "white" , marginBottom: "10px"}}>
-        <label>
-          <input type="checkbox"
-            onClick={filterVisibleHandler}
-          />
-          Filter
-        </label>
-      </div>
-      {filterVisible && <div className='expenses-filter'>
+      <div className='expenses-filter'>
         <div className='expenses-filter__control'>
-          <label>Filter by Year</label>
-          <select onChange={dropdownChangeHandlerYear} defaultValue={'DEFAULT'}>
-          <option value="DEFAULT" disabled hidden>Select</option>
+          <label><input type="checkbox" onClick={filterVisibleHandlerYear} />
+            Filter by Year
+          </label>
+          {filterVisibleYear && <select onChange={dropdownChangeHandlerYear} defaultValue={'DEFAULT'}>
+            <option value="DEFAULT" disabled hidden>Select</option>
             <option value='2022'>2022</option>
             <option value='2021'>2021</option>
             <option value='2020'>2020</option>
             <option value='2019'>2019</option>
-          </select>
+          </select>}
         </div>
         <div className='expenses-filter__control'>
-          <label>Filter by Month</label>
-          <select onChange={dropdownChangeHandlerMonth} defaultValue={'DEFAULT'}>
+          <label><input type="checkbox" onClick={filterVisibleHandlerMonth} />
+            Filter by Month
+          </label>
+          {filterVisibleMonth && <select onChange={dropdownChangeHandlerMonth} defaultValue={'DEFAULT'}>
             <option value="DEFAULT" disabled hidden>Select</option>
             <option value='January'>January</option>
             <option value='February'>February</option>
@@ -58,9 +66,9 @@ const ExpensesFilter = (props) => {
             <option value='October'>October</option>
             <option value='November'>November</option>
             <option value='December'>December</option>
-          </select>
+          </select>}
         </div>
-      </div>}
+      </div>
     </div>
   );
 };

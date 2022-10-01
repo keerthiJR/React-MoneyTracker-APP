@@ -18,10 +18,13 @@ const Expenses = (props) => {
         // console.log(selectedMonth)
         setFilteredMonth(selectedMonth);
     }
-    const filterApplyHandler = (allExpenses) => {
+    const filterApplyHandlerYear = (allExpenses) => {
             setFilteredYear(allExpenses);
-            setFilteredMonth(allExpenses);
     }
+
+    const filterApplyHandlerMonth = (allExpenses) => {
+        setFilteredMonth(allExpenses);
+}
 
     let filterExpensesYear;
 
@@ -38,25 +41,29 @@ const Expenses = (props) => {
     if (filteredMonth === 'ALL') {
         filterExpensesMonth = props.items
     } else {
-        filterExpensesMonth = filterExpensesYear.filter(expense => {
+        filterExpensesMonth = props.items.filter(expense => {
             return expense.date.toLocaleString('en-US', { month: 'long' }) === filteredMonth;
         })
     }
 
-    const sortExpensesYear = filterExpensesMonth.sort((a, b) => a.date.getTime() - b.date.getTime());
+    console.log(filterExpensesYear, filterExpensesMonth)
 
-    console.log(sortExpensesYear)
+    const mergeExpensesYearMonth = filterExpensesYear.filter(o => filterExpensesMonth.some(({id}) => o.id === id));
+
+    const sortExpensesYearMonth = mergeExpensesYearMonth.sort((a, b) => a.date.getTime() - b.date.getTime())
+
+    console.log(sortExpensesYearMonth)
 
     return (
         <div>
             <Card className="expenses">
-                <ExpensesFilter onChangeFilterYear={filterChangeHandlerYear} onChangeFilterMonth={filterChangeHandlerMonth} onApplyFilter={filterApplyHandler} />
+                <ExpensesFilter onChangeFilterYear={filterChangeHandlerYear} onChangeFilterMonth={filterChangeHandlerMonth} onApplyFilterYear={filterApplyHandlerYear} onApplyFilterMonth={filterApplyHandlerMonth} />
                 <div style={{ display: "flex", justifyContent: "space-evenly" }}>
                     <div>
-                        <ExpensesChart expenses={sortExpensesYear} />
+                        <ExpensesChart expenses={sortExpensesYearMonth} />
                     </div>
                     <div style={{ maxHeight: "400px", overflowY: "auto" }}>
-                        <ExpensesList items={sortExpensesYear} />
+                        <ExpensesList items={sortExpensesYearMonth} />
                     </div>
                 </div>
             </Card>
